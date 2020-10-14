@@ -1,11 +1,9 @@
-import express from 'express';
+import express, { Router } from 'express';
 import './database/connection';
+import routes from './routes';
 
+import app from './app';
 
-const app = express();
-
-app.get('/users', (request, response) => {
-  response.json({"only": "test"})
-})
-
-app.listen(3333);
+app.use(express.json());
+app.use(routes);
+app.listen(process.env.PORT || 3333);
