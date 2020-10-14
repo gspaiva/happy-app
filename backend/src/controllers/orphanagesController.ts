@@ -26,6 +26,8 @@ export default {
       opening_hours,
       open_on_weekends,
     } = request.body;
+
+    const openOnWeekendsParsed: boolean = open_on_weekends === 'true' ? true : false;
   
     const orphanageRepository = getRepository(Orphanage);
     const requestImages = request.files as Express.Multer.File[];
@@ -40,7 +42,7 @@ export default {
       about,
       instructions,
       opening_hours,
-      open_on_weekends,
+      open_on_weekends: openOnWeekendsParsed,
       images
     });
     
