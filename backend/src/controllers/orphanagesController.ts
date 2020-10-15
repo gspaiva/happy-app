@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 import { getRepository } from 'typeorm';
 import Orphanage from '../models/Orphanage';
-import Image from '../models/Image';
+import orphanageView from '../views/orphanage_view';
 
 export default {
   
@@ -10,7 +10,7 @@ export default {
     const orphanages = await orphanageRepository.find({
       relations: ['images']
     });
-    response.json(orphanages); 
+    response.json(orphanageView.renderMany(orphanages)); 
   },
   async show(request: Request, response: Response): Promise<void> {
     const { id } = request.params;
@@ -18,7 +18,7 @@ export default {
     const orphanage = await orphanageRepository.findOneOrFail(id, {
       relations: ['images']
     });
-    response.json(orphanage); 
+    response.json(orphanageView.render(orphanage)); 
   },
   async create(request: Request, response: Response): Promise<void>{
     const { 
