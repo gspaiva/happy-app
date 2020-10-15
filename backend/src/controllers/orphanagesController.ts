@@ -7,13 +7,17 @@ export default {
   
   async index(request: Request, response: Response): Promise<void> {
     const orphanageRepository = getRepository(Orphanage);
-    const orphanages = await orphanageRepository.find();
+    const orphanages = await orphanageRepository.find({
+      relations: ['images']
+    });
     response.json(orphanages); 
   },
   async show(request: Request, response: Response): Promise<void> {
     const { id } = request.params;
     const orphanageRepository = getRepository(Orphanage);
-    const orphanage = await orphanageRepository.findOneOrFail(id);
+    const orphanage = await orphanageRepository.findOneOrFail(id, {
+      relations: ['images']
+    });
     response.json(orphanage); 
   },
   async create(request: Request, response: Response): Promise<void>{
